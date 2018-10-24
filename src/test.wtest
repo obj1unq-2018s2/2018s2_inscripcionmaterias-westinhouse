@@ -3,7 +3,7 @@ import Materia.*
 import carrera.*
 
 
-describe "Tests de inscripción"{
+describe "Tests de inscripción "{
 	
 	
 	var objetos1 = new Materia( materiasCorrelativas = intro,

@@ -16,7 +16,7 @@ class Alumno {
 	method materiaPerteneceACarreraEnCurso(materia){
 	 	/*
 	 	 * Devuelve un booleano indicando si la materia dada por parámetro
-	 	 * pertenece a alguna de las carreras que está cursando el alumno.
+	 	 * pertenece a alguna de las carreras que esta cursando el alumno.
 	 	 */
 	 	 
 	 	 return carrerasEnCurso.any{

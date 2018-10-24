@@ -9,7 +9,7 @@ class Carrera {
 	method materiasPorAnio(anio){
 		/*
 		 * Devuelve las materias de la carrera del anio de cursada 
-		 * específicado. El resultado es un conjunto de Materia
+		 * específicado. El resultado es un conjunto de Materia.
 		 */
 		 
 		 return materias.filter{

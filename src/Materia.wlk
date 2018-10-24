@@ -7,7 +7,7 @@ class Materia {
 	// Se setea un número cuando se instancia esta clase.
 	
 	var property creditosQueOtorga = 0
-	//Se setea un número que indica los créditos obtenidos al aprobar la materia.
+	//Se setea un número que indica los creditos obtenidos al aprobar la materia.
 	
 	var property tieneRequisitos = false
 	//Es un booleano que indica si la materia tiene requisitos para cursarse.
