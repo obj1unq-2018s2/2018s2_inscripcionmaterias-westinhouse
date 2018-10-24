@@ -1,0 +1,41 @@
+import Alumno.*
+import Materia.*
+import carrera.*
+
+
+describe "Tests de inscripción"{
+	
+	
+	var objetos1 = new Materia( materiasCorrelativas = intro,
+								creditosNecesarios = 10,
+								creditosQueOtorga = 12,
+								tieneRequisitos = true,
+								anio = 2,
+								carreraALaQuePertenece = tpi,
+								cupo = 40,
+								alumnosEnEspera = [],
+								alumnosInscriptos = []
+							  )
+	var intro = new Materia(    materiasCorrelativas = [],
+								creditosNecesarios = 0,
+								creditosQueOtorga = 10,
+								tieneRequisitos = false,
+								anio = 1,
+								carreraALaQuePertenece = tpi,
+								cupo = 40,
+								alumnosEnEspera = [],
+								alumnosInscriptos = []
+							  )
+							  
+	var tpi = new Carrera(	    materias =[objetos1, tpi],
+								alumnosInscriptos = [damian, fede]
+								
+						 )
+						 
+	var damian = new Alumno (   carrerasEnCurso = tpi,
+								materiasAprobadas = intro,
+								materiasEnCurso = objetos1,
+								
+	)
+							
+}
