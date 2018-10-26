@@ -1,41 +1,119 @@
 import Alumno.*
 import Materia.*
 import carrera.*
-
+import criterios.*
 
 describe "Tests de inscripción "{
+		
+	// CARRERA
+							  
+	var tpi = new Carrera(	    materias = [],
+								alumnosInscriptos = []								
+						 )	
+	// MATERIAS
 	
-	
-	var objetos1 = new Materia( materiasCorrelativas = intro,
-								creditosNecesarios = 10,
-								creditosQueOtorga = 12,
-								tieneRequisitos = true,
-								anio = 2,
-								carreraALaQuePertenece = tpi,
-								cupo = 40,
-								alumnosEnEspera = [],
-								alumnosInscriptos = []
-							  )
-	var intro = new Materia(    materiasCorrelativas = [],
-								creditosNecesarios = 0,
-								creditosQueOtorga = 10,
-								tieneRequisitos = false,
+	var intro = new Materia(   	creditosQueOtorga = 10,
 								anio = 1,
 								carreraALaQuePertenece = tpi,
 								cupo = 40,
 								alumnosEnEspera = [],
 								alumnosInscriptos = []
 							  )
+					  
+	var ingles = new Materia_ConCreditos(    
+								creditosNecesarios = 10,
+								creditosQueOtorga = 8,
+								anio = 1,
+								carreraALaQuePertenece = tpi,
+								cupo = 0,
+								alumnosEnEspera = [],
+								alumnosInscriptos = [ ] //Se supone que el cupo está completo, por lo que en esta lista habría 30+ alumnos.
+							  )
+	
 							  
-	var tpi = new Carrera(	    materias =[objetos1, tpi],
-								alumnosInscriptos = [damian, fede]
-								
-						 )
+	var objetos1 = new Materia_ConCorrelativas(
+								materiasCorrelativas = [intro],
+								creditosQueOtorga = 12,
+								anio = 2,
+								carreraALaQuePertenece = tpi,
+								cupo = 40,
+								alumnosEnEspera = [],
+								alumnosInscriptos = []					
+							  )
+							  
+	// MATERIAS APROBADAS
+	
+	var introCon8 = new Materia_Aprobada(nota = 8, nombreMateria = intro)
+	
+	var introCon7 = new Materia_Aprobada(nota = 7, nombreMateria = intro)
+	
+							  		
+	// ALUMNOS
 						 
-	var damian = new Alumno (   carrerasEnCurso = tpi,
-								materiasAprobadas = intro,
-								materiasEnCurso = objetos1,
-								
-	)
+	var damian = new Alumno (   carrerasEnCurso = [tpi],
+								materiasAprobadas = [introCon8],
+								materiasEnCurso = [objetos1],
+								materiasEnLaQueFiguraInscripto = [objetos1],
+								creditosAcumulados = 20,
+								materiasEnListaDeEspera = [] 		
+							)
+	
+	var fede = new Alumno (		carrerasEnCurso = [tpi],
+								materiasAprobadas = [],
+								materiasEnCurso = [intro],
+								materiasEnLaQueFiguraInscripto = [intro],
+								creditosAcumulados = 10,
+								materiasEnListaDeEspera = []
+						    )
+	
+	
+	var andi = new Alumno (		carrerasEnCurso = [tpi],
+								materiasAprobadas = [introCon7],
+								materiasEnCurso = [objetos1],
+								materiasEnLaQueFiguraInscripto = [objetos1],
+								creditosAcumulados = 20,
+								materiasEnListaDeEspera = [ingles]
+							)
+	// CRITERIOS
+	
+	var ninguno = new Ninguno()
+	var ordenDeLlegada = new OrdenDeLlegada()
+	
+	
+	// TESTS
+	
+	test "Un alumno se intenta inscribir a una materia que ya cursó, se rechaza."{
+							
+			damian.inscribirseA(intro, tpi, ninguno)
+			assert.that(damian.aproboLaMateria(intro))
+			assert.notThat(damian.estaInscriptoEnLaMateria(intro))				
+	}
+						
+	
+	
+	test "Un alumno se intenta inscribir pero le falta una correlativa"{
+		
+		fede.inscribirseA(objetos1, tpi, ninguno)
+	 	
+	 	assert.notThat(objetos1.cumpleConLosRequisitosParaCursar(fede, tpi))
+		assert.notThat(fede.aproboLasMateriasCorrelativas(objetos1))
+	}
+	
+	
+	
+	test "Un alumno se intenta inscribir pero no hay cupo"{
+		ingles.alumnosEnEspera().add(andi)
+		damian.inscribirseA(ingles, tpi, ordenDeLlegada)
+		
+		assert.notThat(ingles.tieneCupoDisponible())
+		assert.that(damian.materiasEnListaDeEspera().contains(ingles))
+		assert.that(ingles.alumnosEnEspera().contains(damian))
+		assert.equals(damian, ingles.alumnosEnEspera().last())
+		
+	}
+	
+	
+	
+	
 							
 }

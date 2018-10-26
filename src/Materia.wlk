@@ -1,16 +1,8 @@
+
 class Materia {
-	
-	var property materiasCorrelativas = null 	
-	// Conjunto de Materias
-	
-	var property creditosNecesarios = 0 
-	// Se setea un número cuando se instancia esta clase.
-	
+		
 	var property creditosQueOtorga = 0
 	//Se setea un número que indica los creditos obtenidos al aprobar la materia.
-	
-	var property tieneRequisitos = false
-	//Es un booleano que indica si la materia tiene requisitos para cursarse.
 	
 	var property anio = 0
 	// Se setea un número indicando el año de la carrera al que la materia pertenece.
@@ -33,17 +25,9 @@ class Materia {
 	
 	
 	
-	
 	method cumpleConLosRequisitosParaCursar(alumno, carrera){
-		
-		if(tieneRequisitos){	
-			return 	alumno.aproboLasMateriasCorrelativas(self) &&
-			  	    alumno.tieneLosCreditosNecesarios(self) &&
-			        alumno.aproboLasMateriasDeTalAnio(anio - 1, carrera)
-		}
-		else{
-			return true
-		}	        
+		//Retorna siempre TRUE debido a que la clase Materia no tiene requisitos para cursar.	
+		return true
 	}
 	
 	//Métodos requeridos para el punto 3
@@ -79,8 +63,64 @@ class Materia {
 		 alumnosInscriptos.add(alumnosEnEspera.first())
 		 alumnosEnEspera.remove(alumnosEnEspera.first())
 	}
+	
+	// Métodos requeridos para el punto 8
+	
+	method inscribirSegunCriterio(criterio){
+		/*
+		 * Inscribe de la lista de alumnos en espera al alumno 
+		 * seleccionado según el criterio especificado.
+		 */
+		 
+		 criterio.inscribirAlumno(self)
+	}
 		
 }
+
+class Materia_ConCorrelativas inherits Materia {
+	
+	var property materiasCorrelativas = null 	
+	// Lista de Materias
+	
+	
+	override method cumpleConLosRequisitosParaCursar(alumno, carrera){
+		/*
+		 * Devuelve un booleano indicando si el alumno cumple con 
+		 * las materias correlativas necesarias
+		 */
+		return alumno.aproboLasMateriasCorrelativas(self)
+	}
+}
+
+class Materia_ConCreditos inherits Materia {
+	
+	var property creditosNecesarios = 0 
+	// Se setea un número cuando se instancia esta clase.
+	
+	
+	override method cumpleConLosRequisitosParaCursar(alumno, carrera){
+		/*
+		 * Devuelve un booleano indicando si el alumno tiene los créditos
+		 * necesarios para cursar la materia.
+		 */
+		return alumno.tieneLosCreditosNecesarios(self)
+	}
+}
+
+
+class Materia_Avanzada inherits Materia {
+	
+	override method cumpleConLosRequisitosParaCursar(alumno, carrera){
+		/*
+		 * Retorna True si el alumno aprobo todas las materias de determinado 
+		 * año que sean requisitos para cursar la materia.
+		 */
+		return alumno.aproboLasMateriasDeTalAnio(anio - 1, carrera)
+	}
+}
+
+
+
 
 
 

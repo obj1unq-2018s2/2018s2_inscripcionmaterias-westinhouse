@@ -1,16 +1,12 @@
-import Materia.*
-import carrera.*
-
 
 class Alumno {
 	
-	var property carrerasEnCurso   = null // Conjunto de Carrera
-	var property materiasAprobadas = null  // Conjunto de Materia
-	var property materiasEnCurso   = null // Conjunto de Materia
-	var property materiasEnLaQueFiguraInscripto = null //Conjunto de Materia
-	var property creditosAcumulados = 0 // Es un número
-	
-	var property materiasEnListaDeEspera = #{} // Lista de Materia
+	var property carrerasEnCurso   = null  // Lista de Carrera
+	var property materiasAprobadas = null  // Lista de Materia_Aprobada
+	var property materiasEnCurso   = null  // Lista de Materia
+	var property materiasEnLaQueFiguraInscripto = null // Lista de Materia
+	var property creditosAcumulados = 0     // Es un número
+	var property materiasEnListaDeEspera = null	 // Lista de Materia
 	
 	
 	method materiaPerteneceACarreraEnCurso(materia){
@@ -119,9 +115,10 @@ class Alumno {
 	
 	//PUNTO 3
 	
-	method inscribirseA(materia, carrera){
+	method inscribirseA(materia, carrera, criterio){
 		/*
-		 * Inscribe al alumno en una materia. Esto tendrá los siguientes efectos:
+		 * Inscribe al alumno en una materia según el criterio de inscripcion 
+		 * que maneje la materia. Esto tendrá los siguientes efectos:
 		 * (Si la materia tiene cupo disponible):
 		 * Agrega la materia a la lista de materias en las que el alumno figura inscripto.
 		 * Agrega al estudiante a la lista de estudiantes inscriptos de la materia
@@ -131,7 +128,7 @@ class Alumno {
 		 */
 		 
 		 if(materia.tieneCupoDisponible() && self.puedeCursarMateria(materia, carrera)){
-		 	materia.inscribirAlumno(self)
+		 	materia.inscribirSegunCriterio(self, criterio)
 		 	materiasEnLaQueFiguraInscripto.add(materia)	 	
 		 }
 		 else{
@@ -174,7 +171,11 @@ class Alumno {
 		}
 	}
 	
+	// PUNTO 8
 	
+	method promedio(){
+		return materiasAprobadas.sum{ materia => materia.nota()} / materiasAprobadas.size()
+	}
 	
 	
 }

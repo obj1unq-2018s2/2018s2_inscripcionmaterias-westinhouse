@@ -1,11 +1,20 @@
+
 class Carrera {
 	
-	var property materias = #{} 
-	//Conjunto de Materia
+	var property materias = null
+	//Lista de Materia
 	
 	var property alumnosInscriptos = null
 	//Lista de Alumno anotados a la carrera.
 	
+	
+	method agregarMateria(materia){
+		materias.add(materia)
+	}
+	
+	method agregarAlumno(alumno){
+		alumnosInscriptos.add(alumno)
+	}
 	method materiasPorAnio(anio){
 		/*
 		 * Devuelve las materias de la carrera del anio de cursada 
