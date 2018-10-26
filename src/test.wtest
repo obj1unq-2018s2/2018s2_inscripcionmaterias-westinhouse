@@ -27,7 +27,7 @@ describe "Tests de inscripción "{
 								carreraALaQuePertenece = tpi,
 								cupo = 0,
 								alumnosEnEspera = [],
-								alumnosInscriptos = [ ] //Se supone que el cupo está completo, por lo que en esta lista habría 30+ alumnos.
+								alumnosInscriptos = [ ] // Se supone que el cupo está completo, por lo que en esta lista habría 30+ alumnos.
 							  )
 	
 							  
